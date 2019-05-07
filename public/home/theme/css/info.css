@@ -1,0 +1,31 @@
+
+	/*隐藏左侧导航条*/
+	.pullDownList{
+
+		display: none;
+	}
+
+	/*小图标*/
+	#move{
+		width: 120px;
+		height: 120px;
+		position: absolute;
+		left:0px;
+		top:0px;
+		display:none;
+		background: url(/home/theme/img/pd/bg.png);
+	}
+	/*右边大图*/
+	#big{
+		width:440px;
+		height:440px;
+		position:absolute;
+    	background:#fff;
+		left:440px;
+		top:10px;
+		overflow:hidden;
+		display:none;
+	}
+	#bigimg{
+			position: absolute;
+		}
