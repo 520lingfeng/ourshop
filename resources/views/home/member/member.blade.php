@@ -37,7 +37,7 @@
 
 <div class="containers"><div class="pc-nav-item"><a href="/">首页</a> &gt; <a href="/member">会员中心 </a> </div></div>
 
-<!-- 左侧个人中心栏 begin -->
+<!-- 商城快讯 begin -->
 <section id="member">
     <div class="member-center clearfix">
         <div class="member-left fl">
@@ -136,7 +136,7 @@
         </div>
     </div>
 </section>
-<!-- 左侧个人中心栏 End -->
+<!-- 商城快讯 End -->
 
 
 @stop

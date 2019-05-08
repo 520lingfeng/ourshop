@@ -87,6 +87,8 @@ class OrdersController extends Controller
             $gid = $v->gid;
             $gnum = $v->snum;
             DB::insert("INSERT INTO `orderinfo` (`oid`, `gid`, `gnum`, `add`, `oname`)VALUES('$oid', '$gid', '$gnum', '$add', '$oname')");
+            //把库存减去
+            DB::update("UPDATE goods SET stock=stock-'$gnum' WHERE gid='$gid'");
         }
     }else{
         return redirect('/carinfo')->with('error','地址未选择');

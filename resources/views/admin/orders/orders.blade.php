@@ -60,7 +60,11 @@
                 </td>
                 <td>
                     <u>
-                     {{$row->uid}}
+                    @foreach($user as $v)
+                      @if($v->id == $row->uid)
+                        {{$v->username}}
+                      @endif
+                    @endforeach
                     </u>
                 </td>
                 <td >
@@ -96,7 +100,6 @@
                 
                 <td class="td-status">
                     <span class="layui-btn layui-btn-normal layui-btn-mini">
-
                     @if($favfruit==0)
                         <a href="/admin/fahuo?id={{$row->oid}}">点击发货</a>
                     @else
@@ -105,7 +108,6 @@
                     </span>
                     <span class="layui-btn layui-btn-normal layui-btn-mini">
                         <a href="/admin/orders/{{$row->oid}}">订单详情</a>
-
                     </span>
                 </td>
                

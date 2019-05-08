@@ -54,14 +54,16 @@
                 <div class="c_num">
                       <input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />
                       <!-- <button class="car_btn_1" onclick="jianUpdate1(jq(this));">-</button> -->
-                    <input type="text" value="{{$v->snum}}" name="carnum" class="car_ipt" />  
+                    <input type="text" value="{{$v->snum}}" name="carnum" class="car_ipt" />
+                    <input type="hidden" value="{{$v->gid}}" name="gid" id="gid">  
+                    <input type="hidden" value="{{$v->price}}" name="price" id='price'>  
                       <input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />
                       <!-- <button class="car_btn_2" onclick="addUpdate1(jq(this));">+</button> -->
 
                   </div>
               </td>
               <!-- <td align="center">26R</td> -->
-              <td align="center" style="color:#ff4e00;">{{$v->price*$v->snum}}</td>
+              <td align="center" id="xiaoji" style="color:#ff4e00;">￥{{$v->price*$v->snum}}</td>
               <td align="center"><a href="#">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
             </tr>
             <?php  $total = $total + $v->price*$v->snum?>
@@ -71,8 +73,15 @@
           @endif
             <tr height="70">
               <td colspan="6" style="font-family:'Microsoft YaHei'; border-bottom:0;">
-                <label class="r_rad"><input type="checkbox" name="clear" checked="checked" /></label><label class="r_txt">清空购物车</label>
-                  <span class="fr">商品总价：<b style="font-size:22px; color:#ff4e00;">￥{{$total}}</b></span>
+                <label class="r_rad">
+                  <input type="checkbox" name="clear" checked="checked" />
+                </label>
+                <label class="r_txt">清空购物车
+                </label>
+                <span class="fr" >商品总价：
+                  <b style="font-size:22px; color:#ff4e00;" id="goodstotalprice">￥{{$total}}
+                  </b>
+                </span>
               </td>
             </tr>
             <tr valign="top" height="150">
@@ -111,6 +120,71 @@
     <!--End 弹出层-删除商品 End-->
     
     
+<script>
+    //购买数量输入框里输入数量处理
+    $(".car_ipt").blur(function(){
+      c = $(this)
+      carnum = $(this).parent().find(".car_ipt").val();
+      gid = $(this).parent().find("#gid").val();
+      price = $(this).parent().find("#price").val();
+      $.get("/addcarnum",{carnum:carnum,gid:gid},function(data){
+        if(data==1){
+          //校验码一致
+          // $("#xiaoji").html('￥'+carnum*price);
+          c.parent().parent().next("td").html('￥'+carnum*price);
+          
+          $.get("/goodstotalprice",{},function(data){
+            $("#goodstotalprice").html(data);
+          },'json')
+        }else{
+          alert('超出库存');
+          c.parent().find(".car_ipt").val(data);
+        }
+      })
+    })
 
+    //购物车购买数量增加
+    $(".car_btn_2").click(function(){
+      s = $(this)
+      carnum = $(this).parent().find(".car_ipt").val();
+      gid = $(this).parent().find("#gid").val();
+      price = $(this).parent().find("#price").val();
+      $.get("/addcarnum",{carnum:carnum,gid:gid},function(data){
+        if(data==1){
+          //校验码一致
+          // $("#xiaoji").html('￥'+carnum*price);
+          s.parent().parent().next("td").html('￥'+carnum*price);
+          
+          $.get("/goodstotalprice",{},function(data){
+            $("#goodstotalprice").html(data);
+          },'json')
+        }else{
+          alert('超出库存');
+          s.parent().find(".car_ipt").val(data);
+        }
+      })
+    })
+    
+    //购物车购买数量减少
+    //$("#id1").on("mouseout change",function(){   });一个元素绑定多个事件
+    $(".car_btn_1").click(function(){
+      s = $(this)
+      carnum = $(this).parent().find(".car_ipt").val();
+      gid = $(this).parent().find("#gid").val();
+      price = $(this).parent().find("#price").val();
+      $.get("/jiancarnum",{carnum:carnum,gid:gid},function(data){
+        if(data==1){
+          //校验码一致
+          // $("#xiaoji").html('￥'+carnum*price);
+          s.parent().parent().next("td").html('￥'+carnum*price);
+          
+          $.get("/goodstotalprice",{},function(data){
+            $("#goodstotalprice").html(data);
+          },'json')
+        }
+      })
+    })
+</script>
 
 @stop
+

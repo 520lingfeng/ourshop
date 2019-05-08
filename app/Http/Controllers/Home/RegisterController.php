@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Hash;
 use DB;
+use Mail;
 class RegisterController extends Controller
 {
     /**
@@ -43,7 +44,7 @@ class RegisterController extends Controller
         // $password=$request->only(['password']);
         // dd($data);
         // // if()
-         $data=$request->except(['_token','repassword']);
+         $data=$request->except(['_token','repassword','phone','code']);
          // dd($data);
          $data['password']=Hash::make($data['password']);
          $data['addtime'] = time();
@@ -99,5 +100,72 @@ class RegisterController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // 验证用户名是重复
+     public function checkusername(Request $request)
+     {
+        $username = $request->input('username');
+        //获取homeuser表数据一行数据
+        $info = DB::table('homeusers')->pluck('username');
+        // 把数据转换成数组
+        $users = array();
+        foreach($info as $key => $v)
+        {
+            $users[$key]=$v;
+        }
+        //对比
+        if(in_array($username,$users))
+        {
+            echo 1;//用户名已经存在
+        }else{
+            echo 0;//用户名可以注册
+        }
+     }
+
+
+
+    // 手机号验证
+    public function checkphone(Request $request){
+        $phone = $request->input('phone');
+        //获取homeinfo表数据一行数据
+        $info = DB::table('homeinfo')->pluck('phone');
+        //把数据对象转换成数组
+        $arr = array();
+        foreach($info as $key => $v){
+            $arr[$key]=$v;
+        }
+        //对比
+        if(in_array($phone,$arr)){
+            echo 1;//手机号已经注册
+        }else{
+            echo 0;//手机号可以注册
+        }
+    }
+    // 获取手机验证码
+    public function sendphone(Request $request){
+        $phone = $request->input('phone');
+        //调用短信接口
+        sendphone($phone);
+    }
+
+
+     public function checkcode(Request $request){
+        //获取输入的校验码
+        $code=$request->input('code');
+        if(isset($_COOKIE['fcode']) && !empty($code)){
+            //获取手机号接收到验证码
+            $fcode=$request->cookie('fcode');
+            if($fcode==$code){
+                echo 1;//校验码一致
+            }else{
+                echo 2;//校验码不一致
+            }
+        }elseif(empty($code)){
+            echo 3;//输入的校验码为空
+        }else{
+            echo 4;//校验码过期
+        }
+
     }
 }

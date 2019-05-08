@@ -11,13 +11,12 @@ class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * 退出
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-
-        // 删除session中username值
+        //退出
         $request->session()->pull('username');
         return redirect("/admins/login/create");
     }
