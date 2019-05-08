@@ -15,20 +15,7 @@ class CarController extends Controller
      */
     public function index()
     { 
-        // $arr = session('car')?session('car'):array();
-        // if(in_array($id,$arr)){
-        //     $arr[$id]['num'] +=1;
-        // }else{
-        //     $arr[$id]['num'] = 1;  
-        // }
-        
-        // session(['car'=>$arr]);
-        // $value = session();
-        // 
-        // 
-        // 
-        // dd(session('husername'));
-        // dd($value);
+
         //获取购物车商品信息
         $data = DB::table('car')->where('username','=',session('husername'))->get();
         //显示购物车
@@ -53,6 +40,9 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {   
+        //获取用户id
+       $username = session('husername');
+       $uids = DB::select("select id from homeusers where username='$username'");
         //获取传过来的地址id
             $addid = $request->input('address');
         //判断有没有地址
@@ -67,8 +57,8 @@ class CarController extends Controller
         $username = session('husername');
         //获取car表里的数据
         $data = DB::table('car')->where('username','=',$username)->get();
-        // dd($data);
-        return view("Home.Car.carinfo",['title'=>'确认订单','data'=>$data,'address'=>$address]);
+        // dd($uids);
+        return view("Home.Car.carinfo",['title'=>'确认订单','data'=>$data,'address'=>$address,'uid'=>$uids]);
     }
 
     /**
@@ -142,5 +132,61 @@ class CarController extends Controller
     public function destroy($id)
     {
         //
+    }
+    // 点击增加购物车数量
+    public function addcarnum(Request $request)
+    {
+        $username = session('husername');//用户名
+        $addnum = $request->input('carnum');//更改的数量
+        $gid = $request->input('gid');//商品id
+        //关联商品库存,如果大于库存不能更改给与提示
+        $data = DB::select("SELECT stock FROM goods WHERE gid='$gid'");
+        $stock = $data[0]->stock;
+        //判断修改增加的数量是否大于库存
+        if($addnum<=$stock)
+        {
+            //更新car表里的数量
+            // $info =DB::table('car')->where('gid', $gid)->where('username',$username)->update(['snum' => $addnum])->updata(['total'=>snum*price]);
+            $info =  DB::update("UPDATE car SET snum='$addnum',total=snum*price WHERE gid='$gid' and username='$username'");
+            if($info){
+                echo 1;//成功
+                
+            }else{
+                echo 0;//失败
+            }
+
+        }else{
+            echo $stock;//购买的数量大于库存
+        }
+        
+       
+        
+    }
+
+    // 点击减少购物车数量
+    public function jiancarnum(Request $request)
+    {
+        $addnum = $request->input('carnum');//更改的数量
+
+        $gid = $request->input('gid');//商品id
+        $username = session('husername');//用户名
+        //更新car表里的数量
+        // $info =DB::table('car')->where('gid', $gid)->where('username',$username)->update(['snum' => $addnum])->updata(['total'=>snum*price]);
+        $info =  DB::update("UPDATE car SET snum='$addnum',total=snum*price WHERE gid='$gid' and username='$username'");
+        if($info){
+            echo 1;//成功
+            
+        }else{
+            echo 0;//失败
+        }
+    }
+
+    //处理商品总价
+    public function goodstotalprice(Request $request)
+    {
+        $username = session('husername');//用户名
+        //查询商品总价
+        $data = DB::select("SELECT username,SUM(total) as total FROM car GROUP BY username HAVING username='$username'");
+        echo $data[0]->total;
     }
 }

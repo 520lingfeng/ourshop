@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-<head>
+ <head>
     <meta charset="UTF-8">
     <meta name="Generator" content="EditPlus®">
     <meta name="Author" content="">
@@ -18,20 +18,16 @@
     <script type="text/javascript" src="/home/theme/js/js-tab.js"></script>
     <script type="text/javascript" src="/home/theme/js/MSClass.js"></script>
     <script type="text/javascript" src="/home/theme/js/jcarousellite.js"></script>
+    <!-- // <script type="text/javascript" src="/home/theme/js/top2.js"></script> -->
+    <script type="text/javascript" src="/home/theme/js/top.js"></script>
 
-    <!-- js文件 -->
-    @section('file_js')
+<style>
+    /*二级菜单的样式*/
+    .erji:hover {
 
-    @show()
-    <script type="text/javascript" src="/home/theme/js/top2.js"></script>
-
-    <style>
-        /*二级菜单的样式*/
-        .erji:hover {
-
-            cursor:pointer;
-        }
-    </style>
+        cursor:pointer;
+    }
+</style>
 
  </head>
  <body>
@@ -50,7 +46,7 @@
             <ul class="BHeaderl">
                 @if (session('husername'))
                 
-                    <li><a href="/member" style="float:left;" >{{session('husername')}}</a> <a href="/login" style="float:left;">退出</a> </li>
+                    <li><a href="/member" style="float:left;">{{session('husername')}}</a> <a href="/login" style="float:left;">退出</a> </li>
                 @else
                     <li><a href="/login" style="color:#ea4949;">请登录</a> </li>
                     <li class="headerul">|</li>
@@ -59,19 +55,19 @@
                 <li class="headerul">|</li>
                 <li><a href="/orders">订单查询</a> </li>
                 <li class="headerul">|</li>
-                <li><a href="/collects">我的收藏</a> </li>
+                <li><a href="my-s.html">我的收藏</a> </li>
                 <li class="headerul">|</li>
-                <li id="pc-nav" class="menu"><a href="/" class="tit">我的商城</a>
+                <li id="pc-nav" class="menu"><a href="my-user.html" class="tit">我的商城</a>
                     <div class="subnav">
                         <a href="/orders">我的订单</a>
-                        <a href="/collects">我的收藏</a>
+                        <a href="my-s.html">我的收藏</a>
                         <a href="my-user.html">账户安全</a>
-                        <a href="/address">地址管理</a>
+                        <a href="my-add.html">地址管理</a>
                         <a href="my-p.html">我要评价</a>
                     </div>
                 </li>
                 <li class="headerul">|</li>
-                <li id="pc-nav1" class="menu"><a href="/" class="tit M-iphone">手机悦商城</a>
+                <li id="pc-nav1" class="menu"><a href="#" class="tit M-iphone">手机悦商城</a>
                    <div class="subnav">
                        <a href="#"><img src="/home/theme/icon/ewm.png" width="115" height="115" title="扫一扫，有惊喜！"></a>
                    </div>
@@ -96,7 +92,7 @@
                 <a href="#">服装城</a>
             </div>
         </div>
-        <div class="header-cart fr"><a href="/car"><img src="/home/theme/icon/car.png"></a> <i class="head-amount">99</i></div>
+        <div class="header-cart fr"><a href="#"><img src="/home/theme/icon/car.png"></a> <i class="head-amount">99</i></div>
         <div class="head-mountain"></div>
     </div>
 
@@ -105,19 +101,8 @@
         // 引入分类模型
         use App\Model\Admin\Type;
 
-        // 判断缓存中是否有type值
-        if (Cache::get('type')) {
-            
-            $type = Cache::get('type');
-
-        } else {
-
-            // 获取所有分类 一级
-            $type = Type::all();
-            
-            // 将值放进缓存
-            Cache::forever('type', $type);
-        }
+        // 查询所有分类 一级分类
+        $type = Type::all();
     
         // 二级分类
         $type2 = $type;
@@ -128,17 +113,15 @@
     <div class="yHeader">
         <div class="yNavIndex">
             <div class="pullDown">
-                <h2 class="pullDownTitle" style="margin:0">
-                    <a href="/list" style="color:#fff;">全部商品分类</a>
+                <h2 class="pullDownTitle">
+                    <a href="/list" style="color:#fff">全部商品分类</a>
                 </h2>
-                <ul class="pullDownList" style="background-color:#444">
-
+                <ul class="pullDownList">
                 @foreach ($type as $k => $v)
-                    {{-- 一级分类 --}}
-                    @if ($v->path == '0,' && $v->status == 0)
+                    @if ($v->path == '0,')
                     <li class="menulihover">
                         <i class="listi1"></i>
-                        <a href="/list" target="_blank">{{ $v->tname }}</a>
+                        <a href="all-cl.html" target="_blank">{{ $v->tname }}</a>
                         <span></span>
                     </li>
                     @endif
@@ -149,11 +132,10 @@
                 @foreach ($type as $k => $v)
                     <div class="yMenuListConin">
                         <div class="yMenuLCinList fl">
-                        {{-- 二级分类 --}}
                         @foreach ($type2 as $k2 => $v2)
-                            @if ($v->tid == $v2->pid && $v2->status == 0)
+                            @if ($v->tid == $v2->pid)
                                 <p>
-                                    <a href="/erji/{{ $v2->tid }}" class="ecolor610" >{{ $v2->tname }}</a>
+                                    <a href="" class="ecolor610" >{{ $v2->tname }}</a>
                                 </p>
                             @endif
                         @endforeach
@@ -291,10 +273,6 @@
         </div>
     </div>
 </div>
-    @section('js')
-
-    @show()
 </body>
-
 
 </html>

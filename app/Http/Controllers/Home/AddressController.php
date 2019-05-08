@@ -100,7 +100,9 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-        //
+        //获取当前登录用户的所有收货地址
+        $address = DB::select("select * from address where uid='$id'");
+        return view("Home.Orders.address",['address'=>$address]);
     }
 
     /**
@@ -162,5 +164,11 @@ class AddressController extends Controller
         Address::where('id', $id)->delete();
 
         return back();
+    }
+
+
+    //购物车选择地址
+    public function checkadd($id){
+
     }
 }

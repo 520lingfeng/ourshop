@@ -149,7 +149,7 @@ class AdvertController extends Controller
             $names = $name.'.'.$suffix;
 
             // 删除原来文件
-            @unlink('.'.$rs->pic);
+            unlink('.'.$rs->pic);
 
             // 把新文件传到服务器上
             $files->move('./admin/advert_pic', $names);

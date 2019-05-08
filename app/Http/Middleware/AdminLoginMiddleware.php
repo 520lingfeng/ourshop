@@ -16,7 +16,6 @@ class AdminLoginMiddleware
     public function handle($request, Closure $next)
     {
         if (session('username')) {
-            
             return $next($request);
         } else {
             

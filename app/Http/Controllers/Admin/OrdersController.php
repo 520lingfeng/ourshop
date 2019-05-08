@@ -16,11 +16,37 @@ class OrdersController extends Controller
     {
         //获取
        $orders=DB::table('orders')->get();
-        // dd($orders);
-        return view("Admin.Orders.orders",['title'=>'订单列表','orders'=>$orders]);
+       // dd($orders);
+       $user = DB::table('homeusers')->get();
+        // dd($user);
+        return view("Admin.Orders.orders",['title'=>'订单列表','orders'=>$orders,'user'=>$user]);
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    //发货处理
+    public function send(){
+       DB::table('orders')->where('oid', $_GET['id'])->update(['status' => 1]);
+       return redirect('/admin/orders');
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    //订单详情
+    public function orderinfo(){
+        //获取订单详情数据
+        $orderinfo = DB::table('orderinfo')->where('oid',$_GET['id'])->get();
+        // dd($res);
+        return view("Admin.Orders.orderinfo",['title'=>'订单详情页','orderinfo'=>$orderinfo]);
+        
+    }
+
+     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

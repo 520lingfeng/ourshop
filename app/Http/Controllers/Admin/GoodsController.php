@@ -16,7 +16,6 @@ use DB;
 
 class GoodsController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      * 商品列表
@@ -123,7 +122,6 @@ class GoodsController extends Controller
 
         // 通过gid查询单条数据
         $rs = Goods::where('gid', $id)->first();
-
         return view('admin.goods.edit',[
             'title' => '修改商品',
             'res' => $res,
@@ -164,7 +162,7 @@ class GoodsController extends Controller
             $names = $name.'.'.$suffix;
 
             // 删除原来文件
-            @unlink('.'.$rs->pic);
+            unlink('.'.$rs->pic);
 
             // 把新文件传到服务器上
             $files->move('./admin/goods_pic', $names);

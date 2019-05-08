@@ -2,19 +2,11 @@
 
 @section('title',$title)
 
-
 @section('content')
-
-<!-- 设置编辑框左边文字样式 -->
-<style>
-	.wd{
-		width:120px;
-	}
-</style>
 <!-- 右侧内容框架，更改从这里开始 -->
 	<form class="layui-form" action="/admin/user" method="post">
 		 <div class="layui-form-item">
-	        <label for="L_username" class="layui-form-label wd">
+	        <label for="L_username" class="layui-form-label">
 	            <span class="x-red">*</span>管理员账号
 	        </label>
 	        <div class="layui-input-inline">
@@ -23,7 +15,7 @@
 	        </div>
 	    </div>
 	    <div class="layui-form-item">
-	        <label for="L_pass" class="layui-form-label wd">
+	        <label for="L_pass" class="layui-form-label">
 	            <span class="x-red">*</span>密码
 	        </label>
 	        <div class="layui-input-inline">
@@ -31,30 +23,18 @@
 	            autocomplete="off" class="layui-input">
 	        </div>
 	        <div class="layui-form-mid layui-word-aux">
-	            <!-- 6到16个字符 -->
+	            6到16个字符
 	        </div>
 	    </div>
 	     <div class="layui-form-item">
-	        <label for="L_pass" class="layui-form-label wd">
+	        <label for="L_pass" class="layui-form-label">
 	            <span class="x-red">*</span>权限
 	        </label>
 	        <div class="layui-input-inline">
-	            <select name="level">
-					<option value="0" >超级管理员</option>
-					<option value="1" selected>管理员</option>
-				</select>
+	            <input type="level" id="L_pass" name="level" 
+	             class="layui-input">
 	        </div>
-	    </div>
-	     <div class="layui-form-item">
-	        <label for="L_pass" class="layui-form-label wd">
-	            <span class="x-red">*</span>状态
-	        </label>
-	        <div class="layui-input-inline">
-	            <select name="status">
-					<option value="0"  selected>开启</option>
-					<option value="1">禁用</option>
-				</select>
-	        </div>
+	        
 	    </div>
 
 	    <div class="layui-form-item">

@@ -2,19 +2,17 @@
 
 @section('title', $title)
 
-@section('file_js')
 <!-- 引入css文件 -->
 <link rel="stylesheet" href="/home/theme/css/info.css">
-@stop
 
 @section('content')
 <!-- 商品详情 begin -->
 <section>
     <div class="pc-details" >
         <div class="containers">
-            <div class="pc-nav-item"><a class="pc-title" href="/list">{{ $first->tname }}</a> &gt; <a href="/erji/{{ $second->tid }}">{{ $second->tname }}</a> &gt; <span>{{ $goods->gname }}</span></div>
+            <div class="pc-nav-item"><a class="pc-title" href="#">电脑、办公</a> &gt; <a href="#">外设产品</a> &gt; <a href="#">电玩</a>&gt; <a href="#">爱电玩（IGAME）</a>&gt; <a href="#">任天堂NEW 3DS XL NDSi NDSiLL NEW</a> </div>
             <div class="pc-details-l">
-                <div class="pc-product clearfix" style="position:absolute;">
+                <div class="pc-product clearfix">
                 	<!-- 左侧导图 -->
                     <div class="pc-product-h">
                     	<!-- 商品图片 -->
@@ -27,36 +25,16 @@
 						            <!-- 左下切换小图 -->
                         <div class="pc-product-bop clearfix" id="pro_detail">
                             <ul class="uls">
-                                <!-- 商品图 -->
                                 <li>
-                                  <a href="javascript:void(0);" class="cur">
-                                    <img src="{{ $goods['pic'] }}" width="58" height="58">
-                                  </a> 
-                                @php
-                                    // 引入GoodsImg模型
-                                    use App\Model\Admin\GoodsImg;
-
-                                    // 通过id查询数据
-                                    $res = GoodsImg::where('id', $goods->gid)->get();
-                                @endphp
-
+                                	<a href="javascript:void(0);" class="cur">
+                                		<img src="/home/theme/img/pd/product.png" width="58" height="58">
+                                	</a> 
                                 </li>
-                                <!-- 商品附加图 -->
-                                @if ($res != '')
-                                @foreach ($res as $k => $v)
-                                <li>
-                                  <a href="javascript:void(0);" class="cur">
-                                    <img src="{{ $v->pic }}" width="58" height="58">
-                                  </a> 
-                                </li>
-                                @endforeach
-                                @endif
                             </ul>
                         </div>
                         <!-- 右边大图 -->
             						<div id="big">
-            							<img src="{{ $goods['pic'] }}" alt="" id="bigimg"
-                          >
+            							<img src="{{ $goods['pic'] }}" alt="" id="bigimg">
             						</div>
                     </div>
                     <!-- 放大镜效果 -->
@@ -116,10 +94,10 @@
                     	 	// 让大图片动起来
                     	 	// 求得就是大图片距离big 的左偏移量 顶部偏移量
                     	 	// left 和 top
-                    	 	var bl = ml / $('#small').width() * $('#bigimg').width() - 100;
-                    	 	var bt = mt / $('#small').height() * $('#bigimg').height() - 100;
+                    	 	var bl = ml / $('#small').width() * $('#bigimg').width();
+                    	 	var bt = mt / $('#small').height() * $('#bigimg').height();
 
-                        $('#bigimg').css({left : -bl + 'px', top : -bt + 'px'});
+                    	 	$('#bigimg').css({left : -bl + 'px', top : -bt + 'px'});
                     	});
 
                     	// 从small的身上离开 鼠标离开事件
@@ -145,80 +123,72 @@
                     	})
                     </script>
                     <!-- 左侧导图 -->
-
+					
           					<!-- 商品详细信息 -->
-                    <div class="pc-product-t">
-                        <div class="pc-name-info">
-                        	<!-- 商品描述 -->
-                            <h1>{{ $goods['descr'] }}</h1>
-                            <!-- 商品价格 -->
-                            <p class="clearfix pc-rate"><strong>￥{{ $goods['price'] }}</strong> <span><em>限时抢购</em>抢购将于<b class="reds">18</b>小时<b class="reds">57</b>分<b class="reds">34</b>秒后结束</span></p>
-                            <p>由<a href="#" class="reds">神游官方旗舰店</a> 负责发货，并提供售后服务。</p>
-                        </div>
-                        <div class="pc-dashed clearfix">
-                        	<!-- 销量 -->
-                            <span>累计销量：<em class="reds">{{ $goods['sell'] }}</em> 件</span><b>|</b><span>累计评价：<em class="reds">3888</em></span>
-                        </div>
-                        <div class="pc-size">
-                            <div class="attrdiv pc-telling clearfix">
-                                <div class="pc-version">版本</div>
-                                <div class="pc-adults">
-                                    <ul>
-                                        <li><a href="javascript:void(0);" class="cur">32</a> </li>
-                                        <li><a href="javascript:void(0);">32</a> </li>
-                                        <li><a href="javascript:void(0);">32</a> </li>
-                                        <li><a href="javascript:void(0);">32</a> </li>
-                                        <li><a href="javascript:void(0);">32</a> </li>
-                                        <li><a href="javascript:void(0);">32</a> </li>
-                                        <li><a href="javascript:void(0);">32</a> </li>
-                                        <li><a href="javascript:void(0);">32</a> </li>
-                                        <li><a href="javascript:void(0);">32</a> </li>
-                                        <li><a href="javascript:void(0);">32</a> </li>
-                                        <li><a href="javascript:void(0);">32</a> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="pc-telling clearfix">
-                                <div class="pc-version">颜色分类</div>
-                                <div class="pc-adults">
-                                    <ul>
-                                        <li><a href="#" title="黑色" class="cur"><img <img src="/home/theme/img/pd/product.png" width="35" height="35"></a> </li>
-                                        <li><a href="#" title="白色"><img <img src="/home/theme/img/pd/product1.png" width="35" height="35"></a> </li>
-                                        <li><a href="#" title="金色"><img <img src="/home/theme/img/pd/product2.png" width="35" height="35"></a> </li>
+                              <div class="pc-product-t">
+                                  <div class="pc-name-info">
+                                  	<!-- 商品描述 -->
+                                      <h1>{{ $goods['descr'] }}</h1>
+                                      <!-- 商品价格 -->
+                                      <p class="clearfix pc-rate"><strong>￥{{ $goods['price'] }}</strong> <span><em>限时抢购</em>抢购将于<b class="reds">18</b>小时<b class="reds">57</b>分<b class="reds">34</b>秒后结束</span></p>
+                                      <p>由<a href="#" class="reds">神游官方旗舰店</a> 负责发货，并提供售后服务。</p>
+                                  </div>
+                                  <div class="pc-dashed clearfix">
+                                  	<!-- 销量 -->
+                                      <span>累计销量：<em class="reds">{{ $goods['sell'] }}</em> 件</span><b>|</b><span>累计评价：<em class="reds">3888</em></span>
+                                  </div>
+                                  <div class="pc-size">
+                                      <div class="attrdiv pc-telling clearfix">
+                                          <div class="pc-version">版本</div>
+                                          <div class="pc-adults">
+                                              <ul>
+                                                  <li><a href="javascript:void(0);" class="cur">32</a> </li>
+                                                  <li><a href="javascript:void(0);">32</a> </li>
+                                                  <li><a href="javascript:void(0);">32</a> </li>
+                                                  <li><a href="javascript:void(0);">32</a> </li>
+                                                  <li><a href="javascript:void(0);">32</a> </li>
+                                                  <li><a href="javascript:void(0);">32</a> </li>
+                                                  <li><a href="javascript:void(0);">32</a> </li>
+                                                  <li><a href="javascript:void(0);">32</a> </li>
+                                                  <li><a href="javascript:void(0);">32</a> </li>
+                                                  <li><a href="javascript:void(0);">32</a> </li>
+                                                  <li><a href="javascript:void(0);">32</a> </li>
+                                              </ul>
+                                          </div>
+                                      </div>
+                                      <div class="pc-telling clearfix">
+                                          <div class="pc-version">颜色分类</div>
+                                          <div class="pc-adults">
+                                              <ul>
+                                                  <li><a href="#" title="黑色" class="cur"><img <img src="/home/theme/img/pd/product.png" width="35" height="35"></a> </li>
+                                                  <li><a href="#" title="白色"><img <img src="/home/theme/img/pd/product1.png" width="35" height="35"></a> </li>
+                                                  <li><a href="#" title="金色"><img <img src="/home/theme/img/pd/product2.png" width="35" height="35"></a> </li>
 
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="pc-telling clearfix">
-                                <div class="pc-version">数量</div>
-                                <div class="pc-adults clearfix">
-                                    <div class="pc-adults-p clearfix fl">
-                                        <input type="text" id="subnum" value="1">
-                                        <a href="javascript:void(0);" class="amount1"></a>
-                                        <a href="javascript:void(0);" class="amount2"></a>
-                                    </div>
-                                    <div class="fl pc-letter ">件</div>
-                                    <!-- 库存 -->
-                                    <div class="fl pc-stock ">库存<em>{{ $goods['stock'] }}</em>件</div>
-                                </div>
-                            </div>
+                                              </ul>
+                                          </div>
+                                      </div>
+                                      <div class="pc-telling clearfix">
+                                          <div class="pc-version">数量</div>
+                                          <div class="pc-adults clearfix">
+                                              <div class="pc-adults-p clearfix fl">
+                                                  <input type="text" id="subnum" value="1">
+                                                  <a href="javascript:void(0);" class="amount1"></a>
+                                                  <a href="javascript:void(0);" class="amount2"></a>
+                                              </div>
+                                              <div class="fl pc-letter ">件</div>
+                                              <!-- 库存 -->
+                                              <div class="fl pc-stock ">库存<em>{{ $goods['stock'] }}</em>件</div>
+                                          </div>
+                                      </div>
+                                      <div class="pc-number clearfix"><span class="fl">商品编号：1654456   </span> <span class="fr">分享 收藏</span></div>
+                                  </div>
 
-                            <div class="pc-number clearfix"><span class="fl">商品编号：1654456</span> <span class="fr">分享
-                              @if (session('husername'))
-                              <a onclick="collect( {{ $goods['gid'] }})" style="cursor: pointer">收藏</a>
-                              @else
-                              <a href="/login" onclick="login()" style="cursor: pointer">收藏</a>
-                              @endif
-                            </span></div>
-
-                        </div>
-
-                        <!-- 点击购物、加入购物车 -->
-                        <div class="pc-emption">
-                            <a href="">立即购买</a>
-                            <a href="/carinfo/{{ $goods['gid'] }}" class="join">加入购物车</a>
-                        </div>
-                    </div>
+                                  <!-- 点击购物、加入购物车 -->
+                                  <div class="pc-emption">
+                                      <a href="">立即购买</a>
+                                      <a href="/carinfo/{{ $goods['gid'] }}" class="join">加入购物车</a>
+                                  </div>
+                              </div>
           					<!-- 商品详细信息 -->
 
                     <!-- 右侧店铺信息 -->
@@ -652,29 +622,4 @@
 </section>
 <!-- 商品详情 End -->
 
-@stop
-
-@section('js')
-  <script>
-
-      function login()
-      {
-
-        alert('请登录');
-      }
-      function collect(id)
-      {
-
-          $.get('/collects/create', {id : id }, function(data){
-
-            if (data == '1') {
-
-              alert('商品收藏成功！');
-            } else {
-
-              alert('商品已收藏！');
-            }
-          });
-      }
-  </script>
 @stop

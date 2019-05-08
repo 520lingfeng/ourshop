@@ -85,16 +85,26 @@
                    <span class="co2">购买时间</span>
                    <span class="co3">评价状态</span>
                </div>
+            <form action="/comments" method="post">
+            <input type="hidden" name="status" value={{$status}}>
+            <?php $i=0 ?>
+             @foreach($orderinfo as $v)
+                          <input type="hidden" name="oid" value={{$v->oid}}>
+                            @foreach($goods as $vv)
+                              @if($v->gid == $vv->gid)
                <div class="member-class clearfix">
                    <ul>
+
                        <li class="clearfix">
-                           <div class="sp1">
-                               <span class="gr1"><a href="#"><img width="60" height="60" about="" title="" src="theme/img/pd/m1.png"></a></span>
-                               <span class="gr2"><a href="#">红米Note2 标准版 白色 移动4G手机 双卡双待</a></span>
-                               <span class="gr3">X1</span>
-                           </div>
-                           <div class="sp2">2015 - 09 -  02</div>
-                           <div class="sp3"><a href="#">发表评价</a> </div>
+                         
+                                 <div class="sp1">
+                                     <span class="gr1"><a href="#"><img width="60" height="60" about="" title="" src={{$vv->pic}}></a></span>
+                                     <span class="gr2"><a href="#">{{$vv->gname}}</a></span>
+                                     <span class="gr3">X{{$v->gnum}}</span>
+                                 </div>
+                           
+                           <div class="sp2">{{$orders[0]->otime}}</div>
+                          
                        </li>
                    </ul>
                </div>
@@ -107,23 +117,31 @@
                        <li class="clearfix">
                            <div class="member-score fl"><i class="reds">*</i>商品评价：</div>
                            <div class="member-star fl">
-                               <textarea maxlength="200"></textarea>
+                              <!-- <input type="textarea" name='comments' maxlength="200" size="100px" height="30px"> -->
+                               <textarea name="comments[{{$i}}]" maxlength="200"></textarea>
                            </div>
                        </li>
-                       <li class="clearfix">
+                       <!-- <li class="clearfix">
                            <div class="member-score fl">晒单：</div>
                            <div class="member-star fl">
                                <a href="#"><img src="theme/img/pd/m2.png"></a>
                                <a href="#"><img src="theme/img/pd/m2.png"></a>
                                <a href="#"><img src="theme/img/pd/m2.png"></a>
                            </div>
-                       </li>
-                       <li class="clearfix">
+                       </li> -->
+                      <!--  <li class="clearfix">
                            <div style="padding-left:85px;">最多可以增加<i class="reds">10</i>张</div>
-                       </li>
+                       </li> -->
                    </ul>
-               </div>
 
+               </div>
+                @endif
+                           @endforeach
+                           <?php $i++ ?>
+                          @endforeach
+               <center> <div class="sp3" ><button><a>发表评价</a></button></div> </center>
+              {{csrf_field()}}
+            </form>
               <!--   <div class="member-pages clearfix">
                     <div class="fr pc-search-g">
                         <a class="fl pc-search-f" href="#">上一页</a>

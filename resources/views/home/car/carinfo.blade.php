@@ -68,7 +68,7 @@
             </table>
             
             <div class="two_t">
-                <span class="fr"><a href="/address">修改</a></span>收货人信息
+                <span class="fr"><a href="/address/{{$uid[0]->id}}">修改</a></span>收货人信息
             </div>
             @if(session('error'))
                 {{session('error')}}
@@ -85,7 +85,7 @@
                 <td>{{$address[0]->phone}}</td>
               </tr>
             @else
-              <button><a href="/address">选择收货地址</a></button>
+              <button><a href="/address/{{$uid[0]->id}}">选择收货地址</a></button>
             @endif
             </table>
 

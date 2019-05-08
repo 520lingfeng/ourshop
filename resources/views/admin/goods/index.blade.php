@@ -116,13 +116,7 @@
                     class="ml-5 btn btn-info" style="text-decoration:none">
                         促销
                     </a> 
-                    @endif 
-
-                    <a title="关联图" href="/admin/imgs/add/{{ $v->gid }}"
-                    class="ml-5 btn btn-success" style="text-decoration:none">
-                        关联图
-                    </a>
-                                     
+                    @endif                   
                 </td>
             </tr>
             @endforeach

@@ -33,10 +33,10 @@
   <div class="login-wrap">
     <div class="w">
         <div class="login-form">
-            <!-- <div class="login-tab login-tab-l">
+            <div class="login-tab login-tab-l">
                 <a href="javascript:;">扫码登录</a>
-            </div> -->
-            <div class="login-tab login-tab-r" style="right:85px">
+            </div>
+            <div class="login-tab login-tab-r">
                 <a href="javascript:;">账号登录</a>
             </div>
 
@@ -69,11 +69,11 @@
                             </span>
                         </div>
                         <!-- 图片验证码开始 fore3-->
-                       <!--  <div id="o-authcode" class="item item-vcode item-fore3 hide ">
+                        <div id="o-authcode" class="item item-vcode item-fore3 hide ">
                             <input type="text" name="" id="authcode" class="itxt itxt02" name="authcode" tabindex="3">
                             <input type = "button" id="code"  class="verify-code">
                             <a href="javascript:;" onclick='createCode();'>看不清换一张</a>
-                        </div> -->
+                        </div>
                         <!-- 自动登录开始fore4 -->
                         <div class="item item-fore4">
                             <div class="safe">
@@ -82,7 +82,7 @@
                                     <label for>自动登录</label>
                                 </span>
                                 <span class="forget-pw-safe">
-                                    <a href="">忘记密码</a>
+                                    <a href="/forget">忘记密码</a>
                                 </span>
                             </div>
                         </div>

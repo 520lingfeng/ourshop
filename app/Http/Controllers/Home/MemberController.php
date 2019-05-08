@@ -21,7 +21,6 @@ class MemberController extends Controller
        
         //查询相关信息
         $user = User::where('username','=',session('husername'))->first();
-
         //判断是否新用户
         $res = User::find($user->id)->userinfo;
         if(!$res)

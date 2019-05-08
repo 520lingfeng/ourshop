@@ -30,5 +30,4 @@ class StatusController extends Controller
     	// 返回商品列表页
     	return redirect('/admin/goods');
     }
-
 }
