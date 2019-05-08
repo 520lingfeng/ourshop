@@ -2,68 +2,94 @@
 
 @section('title','歪秀购物')
 
+@section('file_js')
+    <script type="text/javascript" src="/home/theme/js/top.js"></script>
+@stop
+
 @section('content')
-<script type="text/javascript">banner()</script>
+
+    @php
+
+        // 引入Advert的模型
+        use App\Model\admin\Advert;
+        
+        // 获取所有广告
+        $advert = Advert::all();
+            
+        // 小图的张数
+        $num = 0;
+    @endphp
 
 <!--- banner begin-->
 <section id="pc-banner">
     <div class="yBanner">
-        <div class="banner" id="banner" >
-            <a href="javascript:;" class="d1" style="background:url(/home/theme/img/ad/banner1.jpg) center no-repeat;background-color: #f01a38; padding-left:180px;"></a>
-            <a href="javascript:;" class="d1" style="background:url(/home/theme/img/ad/banner2.jpg) center no-repeat;background-color: #a96ae3; padding-left:180px;"></a>
-            <a href="javascript:;" class="d1" style="background:url(/home/theme/img/ad/banner3.jpg) center no-repeat;background-color: #081f3c; padding-left:180px;"></a>
-            <a href="javascript:;" class="d1" style="background:url(/home/theme/img/ad/banner4.jpg) center no-repeat;background-color: #4684ff; padding-left:180px;"></a>
-            <a href="javascript:;" class="d1" style="background:url(/home/theme/img/ad/banner5.jpg) center no-repeat;background-color: #a89d9f; padding-left:180px;"></a>
+        <div class="banner" id="banner">
+            <!-- 遍历轮播图 -->
+            @foreach ($advert as $k => $v)
+            @if($v->level == 0 && $v->status == 0)
+            <a href="{{ $v->url }}" class="d1" style="background:url({{ $v->pic }}) center no-repeat ;background-color: #fff; background-size:1000px 480px;padding-left:180px;"></a>
+            @endif
+            @endforeach
+
             <div class="d2" id="banner_id">
                 <ul>
+                    @foreach ($advert as $k => $v)
+                    @if($v->level == 0 && $v->status == 0)                    
                     <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    @endif
+                    @endforeach
                 </ul>
             </div>
         </div>
         <div style="text-align:center;clear:both"></div>
     </div>
 </section>
+<!-- 轮播图 -->
+<script type="text/javascript">banner()</script>
 <!-- banner End -->
 
-<!--- advert begin-->
+<!--- 4张广告 begin-->
 <section id="pc-advert">
     <div class="container-c clearfix">
-        <a href="page.html" target="_blank"><img src="/home/theme/img/pd/pd1.png"></a>
-        <a href="page.html" target="_blank"><img src="/home/theme/img/pd/pd2.png"></a>
-        <a href="page.html" target="_blank"><img src="/home/theme/img/pd/pd3.png"></a>
-        <a href="page.html" target="_blank"><img src="/home/theme/img/pd/pd4.png"></a>
+        <!-- 遍历前面4张小图 -->
+        @foreach ($advert as $k => $v)
+        @if($v->level == 1 && $v->status == 0) 
+            @php
+                $num++;   
+            @endphp
+            @if($num < 5) 
+                <a href="{{ $v->url }}" target="_blank"><img src="{{ $v->pic }}" width="100%" height="100%"></a>
+            @endif
+        @endif
+        @endforeach
     </div>
 </section>
-<!-- advert End -->
+<!-- 4张广告 End -->
 
-<!-- 商城资讯 begin -->
-<section id="pc-information">
-    <div class="containers">
-        <div class="pc-info-mess  clearfix" style="position: relative;">
-            <h2 class="fl" style="margin-right:20px;">商城快讯</h2>
-            <div id="MarqueeDiv" class="MarqueeDiv">
-                <a href="new.html">[特惠]新一代Moto 360智能手表登陆</a>
-                <a href="new.html">[特惠]洗护节 跨品牌满199减100</a>
-                <a href="new.html">[特惠]仁怀政府开启“仁怀酱香酒馆”</a>
-                <a href="new.html">[特惠]洗护节 跨品牌满199减100</a>
-                <a href="new.html">逛商城赚话费，商城通信51城全线抢购 </a>
-                <a href="new.html">文艺蓝牙音箱 火热众筹中 </a>
-                <a href="new.html">[公告]第1000家商城帮服务店落户遵义</a>
-                <a href="new.html">[特惠]新一代Moto 360智能手表登陆</a>
-                <a href="new.html">[特惠]新一代Moto 360智能手表登陆</a>
-                <a href="new.html">[特惠]新一代Moto 360智能手表登陆</a>
-            </div>
-            <a href="new.html" style="position: absolute;right: 15px;top: 0;"> 更多资讯</a>
-        </div>
-    </div>
-</section>
-<!-- 商城资讯 End -->
+    @php
+        // 引入文章模型
+        use App\Model\Admin\Articel;
+
+        // 遍历文章列表
+        $articel = Articel::all();
+            
+    @endphp
+
 
 <!-- 限时抢购 begin -->
+    @php
+
+        // 引入Goods模型
+        use App\Model\Admin\Goods;
+
+        // 引入Salse模型
+        use App\Model\Admin\Sales;
+
+        // 遍历文章列表
+        $sales = Sales::all();
+
+    @endphp
+
 <div class="time-lists clearfix">
     <div class="time-list fl">
         <div class="time-title">
@@ -80,80 +106,39 @@
         <div class="time-border">
             <div class="yScrollList">
                 <div class="yScrollListIn">
-                    <a class="yScrollListbtn yScrollListbtnl" id="prev-01"></a>
                     <div class="yScrollListInList yScrollListInList1 jCarouselLite" style="display:block;margin-left: 20px;" id="demo-01">
                         <ul>
+                            @foreach ($sales as $k => $v)
+                                @php
+                                    $goods = Goods::where('gid',$v->gid)->first();
+                                @endphp
                             <li>
-                                <a href="page.html" target="_blank">
-                                    <img src="/home/theme/img/pd/p1.png">
-                                    <p class="head-name">TP-LINK TL-WN725N 微型150M无线USB网卡</p>
-                                    <p><span class="price">￥138.00</span><span class="discount">￥1000</span></p>
-                                    <p class="label-default">3.45折</p>
+                                <a href="/info/{{ $goods['gid'] }}">
+                                    <img src="{{ $goods['pic'] }}">
+                                    <p class="head-name">{{ $goods['descr'] }}</p>
+                                    <p><span class="price">￥{{ $v->price}}</span><span class="discount">￥{{ $goods['price'] }}</span></p>
+                                    <p class="label-default">{{ $v->discount }}折</p>
                                 </a>
                             </li>
-                            <li>
-                                <a href="page.html" target="_blank">
-                                    <img src="/home/theme/img/pd/p2.png">
-                                    <p class="head-name">TP-LINK TL-WN725N 微型150M无线USB网卡</p>
-                                    <p><span class="price">￥138.00</span><span class="discount">￥1000</span></p>
-                                    <p class="label-default">3.45折</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="page.html" target="_blank">
-                                    <img src="/home/theme/img/pd/p3.png">
-                                    <p class="head-name">TP-LINK TL-WN725N 微型150M无线USB网卡</p>
-                                    <p><span class="price">￥138.00</span><span class="discount">￥1000</span></p>
-                                    <p class="label-default">3.45折</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="page.html" target="_blank">
-                                    <img src="/home/theme/img/pd/p4.png">
-                                    <p class="head-name">TP-LINK TL-WN725N 微型150M无线USB网卡</p>
-                                    <p><span class="price">￥138.00</span><span class="discount">￥1000</span></p>
-                                    <p class="label-default">3.45折</p>
-                                </a>
-                            </li>
-                        </ul>
-                        
-                        
+                            @endforeach
+                        </ul>    
                     </div>
-                    <a class="yScrollListbtn yScrollListbtnr" id="next-01"></a>
+
                     <div class="yScrollListInList yScrollListInList2">
                         <ul>
+                            @foreach ($sales as $k => $v)
+                                @php
+                                    $goods = Goods::where('gid', $v->gid)->first();
+                                @endphp
                             <li>
-                                <a href="">
-                                    <img src="/home/theme/img/pd/p3.png">
-                                    <p class="head-name">TP-LINK TL-WN725N 微型150M无线USB网卡</p>
-                                    <p><span class="price">￥138.00</span><span class="discount">￥1000</span></p>
-                                    <p class="label-default">3.45折</p>
+                                <a href="/info/{{ $goods['gid'] }}">
+                                    <img src="{{ $goods['pic'] }}">
+                                    <p class="head-name">{{ $goods['descr'] }}</p>
+                                    <p><span class="price">￥{{ $v->price }}</span><span class="discount">￥{{ $goods['price'] }}</span></p>
+                                    <p class="label-default">{{ $v->discount }}折</p>
                                 </a>
                             </li>
-                            <li>
-                                <a href="">
-                                    <img src="/home/theme/img/pd/p3.png">
-                                    <p class="head-name">TP-LINK TL-WN725N 微型150M无线USB网卡</p>
-                                    <p><span class="price">￥138.00</span><span class="discount">￥1000</span></p>
-                                    <p class="label-default">3.45折</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="/home/theme/img/pd/p3.png">
-                                    <p class="head-name">TP-LINK TL-WN725N 微型150M无线USB网卡</p>
-                                    <p><span class="price">￥138.00</span><span class="discount">￥1000</span></p>
-                                    <p class="label-default">3.45折</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="/home/theme/img/pd/p3.png">
-                                    <p class="head-name">TP-LINK TL-WN725N 微型150M无线USB网卡</p>
-                                    <p><span class="price">￥138.00</span><span class="discount">￥1000</span></p>
-                                    <p class="label-default">3.45折</p>
-                                </a>
-                            </li>
+                            @endforeach
                         </ul>
                         <div class="yScrollListbtn yScrollListbtnl"></div>
                         <div class="yScrollListbtn yScrollListbtnr"></div>
@@ -163,105 +148,244 @@
         </div>
     </div>
     <div class="news-list fr">
-        <div class="time-title time-clear"><h2>商城快讯</h2><a href="#" class="fr"> 更多资讯</a> </div>
+        <div class="time-title time-clear"><h2>商城快讯</h2><a href="/articel" class="fr"> 更多资讯</a> </div>
         <div class="time-border" style="border-left:none;">
-            <ul class="news">
-                <li><a href="#">[特惠]洗护节 跨品牌满199减100</a> </li>
-                <li><a href="#">[特惠]新一代Moto 360智能手表登陆</a> </li>
-                <li><a href="#">[特惠]惠氏品牌日 两件立享85折</a> </li>
-                <li><a href="#">[特惠]洗护节 跨品牌满199减100</a> </li>
-                <li><a href="#">[特惠]仁怀政府开启“仁怀酱香酒馆”</a> </li>
+            <ul class="news" style="height:145px">
+                <!-- 遍历  显示5条文章内容 -->
+                @php
+                    $num = 0;
+                @endphp
+                @foreach ($articel as $k => $v)
+                @if ($num < 5 && $v->status == 0)
+                    <li><a href="{{ $v->url }}">{{ $v->title }}</a> </li>
+                    @php
+                        $num++;
+                    @endphp
+                @else
+                    @break
+                @endif
+                @endforeach
             </ul>
-            <div class="time-poduse"><img src="/home/theme/img/pd/pj1.png"></div>
+
+            <!-- 第五张小图 -->
+            <!-- 初始化小图数量 -->
+            @php
+                $num = 0;
+            @endphp            
+            <div class="time-poduse">
+                @foreach ($advert as $k1 => $v1)
+                    @if($v1->level == 1 && $v1->status == 0)                 
+                        @php
+                            $num++;
+                        @endphp
+                        @if ($num == 5)
+                        <a href="{{ $v1->url }}" style="display: inline-block;width:306px;height:131px">
+                        <img src="{{ $v1->pic }}" width="100%" height="100%">
+                        </a>
+                        @break
+                        @endif
+                    @endif
+                @endforeach
+            </div>
         </div>
     </div>
 </div>
 <!-- 限时抢购 End -->
 
+<!-- 长图2 -->
+@foreach($advert as $k => $v)
+@if($v->level == 2)
+<div class="containers main-banner"><a href="{{ $v->url }}"><img src="{{ $v->pic }}" width="1200" height="105"></a> </div>
+@endif
+@endforeach
 
 
-<div class="containers main-banner"><a href="#"><img src="/home/theme/img/ad/br1.jpg" width="1200" height="105"></a> </div>
+    @php
+        // 引入type模型
+        use App\Model\Admin\Type;
 
 
+        // 判断缓存中是否有type值
+        if (Cache::get('type')) {
+            
+            $type = Cache::get('type');
 
+        } else {
 
+            // 获取所有分类 一级
+            $type = Type::all();
+            
+            // 将值放进缓存
+            Cache::forever('type', $type);
+        }
 
-<div class="time-lists clearfix">
-    <div class="time-list fl">
-        <div class="time-title time-clear"><h2>好店推荐 </h2></div>
-        <div class="time-border time-border-h clearfix">
-            <div class="fl shop-img">
-                <div class="shop-title"><a href="#"><img src="/home/theme/img/ad/shop1.png"></a></div>
-                <div class="shop-text"><h2>熊太子坚果炒货金冠店铺...</h2> <p>[正品 有赠品 如实描述]</p></div>
-                <div class="shop-work clearfix"><a href="#"><img src="/home/theme/img/ad/shop2.png"></a><a href="#"><img src="/home/theme/img/ad/shop3.png"></a> </div>
-            </div>
-            <div class="shop-bar clearfix fl">
-                <ul>
-                    <li>
-                        <div class="shop-icn"><a href="#"><img src="/home/theme/img/ad/shop4.png"></a></div>
-                        <div class="shop-tex"><a href="#">阿迪王品牌店铺</a> </div>
-                    </li>
-                    <li>
-                        <div class="shop-icn"><a href="#"><img src="/home/theme/img/ad/shop4.png"></a></div>
-                        <div class="shop-tex"><a href="#">阿迪王品牌店铺</a> </div>
-                    </li>
-                    <li>
-                        <div class="shop-icn"><a href="#"><img src="/home/theme/img/ad/shop4.png"></a></div>
-                        <div class="shop-tex"><a href="#">阿迪王品牌店铺</a> </div>
-                    </li>
-                    <li>
-                        <div class="shop-icn"><a href="#"><img src="/home/theme/img/ad/shop4.png"></a></div>
-                        <div class="shop-tex"><a href="#">阿迪王品牌店铺</a> </div>
-                    </li>
-                    <li>
-                        <div class="shop-icn"><a href="#"><img src="/home/theme/img/ad/shop4.png"></a></div>
-                        <div class="shop-tex"><a href="#">阿迪王品牌店铺</a> </div>
-                    </li>
-                    <li>
-                        <div class="shop-icn"><a href="#"><img src="/home/theme/img/ad/shop4.png"></a></div>
-                        <div class="shop-tex"><a href="#">阿迪王品牌店铺</a> </div>
-                    </li>
-                </ul>
+        // 二级分类
+        $type2 = $type;
+    @endphp
+
+    @foreach ($type as $k => $v)
+        @if ($v->path == '0,')
+        <div class="time-lists  clearfix">
+            <div class="time-list time-list-w fl">
+                <div class="time-title time-clear-f"><h2>{{ $v->tname }}</h2>
+                    <ul class="brand-tab H-table clearfix fr" >
+                        <!-- 二级分类 -->
+                        @php
+                            // 定义一个变量识别第一个二级分类
+                            $one = 0;
+                            $n = 2;
+                        @endphp
+                        @foreach ($type2 as $k2 => $v2)
+                            @if ($v->tid == $v2->pid)
+                                @if ($one == 0)
+                                    <li class="cur" value="1"><a href="javascript:void(0);" class="cur">{{ $v2->tname }}</a></li>
+                                    @php 
+                                        $one = 1;
+                                    @endphp                   
+                                @else
+                                    <li value="{{ $n }}"><a href="javascript:void(0);">{{ $v2->tname }}</a></li>
+                                    @php
+                                        $n++;
+                                    @endphp
+                                @endif
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="time-border time-border-h clearfix">
+                    <!-- 品牌 -->
+                    <div class="brand-img fl">
+                        <ul>
+                            <li><a href="#"><img src="/home/theme/img/ad/p1.png" width="125" height="47"></a></li>
+                            <li><a href="#"><img src="/home/theme/img/ad/p2.png" width="125" height="47"></a></li>
+                            <li><a href="#"><img src="/home/theme/img/ad/p3.png" width="125" height="47"></a></li>
+                            <li><a href="#"><img src="/home/theme/img/ad/p4.png" width="125" height="47"></a></li>
+                            <li><a href="#"><img src="/home/theme/img/ad/p5.png" width="125" height="47"></a></li>
+                            <li><a href="#"><img src="/home/theme/img/ad/p6.png" width="125" height="47"></a></li>
+                        </ul>
+                    </div>
+
+                    <!-- 浏览商品的左边第二张大竖图 -->
+                    <div class="brand-bar fl" style="width:300px;height:476px"><a href="#"><img src="/home/theme/img/ad/bar.jpg" width="100%" height="100%"></a> </div>
+
+                    <!-- 商品编列 -->
+                    <div class="brand-poa fl">
+                        @php
+                            // 定义一个变量识别第一个二级分类
+                            $one = 0;
+                            $six = 0;
+                        @endphp
+                        @foreach ($type2 as $k2 => $v2)
+                        @if ($v->tid == $v2->pid)
+                            @if ($one == 0)
+                                @php
+                                    $one = 1;
+                                    $goodes1 = Goods::where('tid', $v2->tid)->get();
+                                @endphp
+                                <div class="brand-poa H-over clearfix">
+                                    <ul>
+                                        @foreach ($goodes1 as $ges1_k => $ges1_v)
+                                        @if ($six < 6)
+                                            <li>
+                                                <div class="brand-imgss" style="width:220px;height:175px"><a href="/info/{{ $ges1_v->gid }}"><img src="{{ $ges1_v->pic }}" height="100%"></a></div>
+                                                <div class="brand-title"><a href="/info/{{ $ges1_v->gid }}">{{ $ges1_v->descr }}</a> </div>
+                                                <div class="brand-price">￥{{ $ges1_v->price }}</div>
+                                            </li>
+                                            @php
+                                                $six++;
+                                            @endphp
+                                        @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @else
+                                @php
+                                    $six = 0;
+                                    $goodes2 = Goods::where('tid', $v2->tid)->get();
+                                @endphp
+                                <div class="brand-poa H-over clearfix" style="display:none;">
+                                    <ul>
+                                        @foreach ($goodes2 as $ges2_k => $ges2_v)
+                                        @if ($six < 6)
+                                        <li>
+                                            <div class="brand-imgss"><a href="/info/{{ $ges2_v->gid }}"><img src="{{ $ges2_v->pic }}"></a></div>
+                                            <div class="brand-title"><a href="/info/{{ $ges2_v->gid }}">{{ $ges2->descr }}</a> </div>
+                                            <div class="brand-price">￥{{ $ges2_v->price }} </div>
+                                        </li>
+                                            @php
+                                                $six++;
+                                            @endphp
+                                        @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        @endif
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="news-list fr">
-        <div class="time-title time-clear"><h2>店铺销量top排行</h2></div>
-        <div style="border-left:none;" class="time-border time-border-h">
-            <ul class="shop-top">
-                <li class="clearfix">
-                    <div class="shop-name fl"><a href="#"><img src="/home/theme/img/ad/top1.png"></a></div>
-                    <div class="shop-titl fl"><p><b>NO.1 阿卡官方旗舰店</b></p> <p>梦想会喜欢 <span class="fr red">已售出：3000+</span></p> </div>
-                </li>
-                <li class="clearfix">
-                    <div class="shop-name fl"><a href="#"><img src="/home/theme/img/ad/top1.png"></a></div>
-                    <div class="shop-titl fl"><p><b>NO.1 阿卡官方旗舰店</b></p> <p>梦想会喜欢 <span class="fr red">已售出：3000+</span></p> </div>
-                </li>
-                <li class="clearfix">
-                    <div class="shop-name fl"><a href="#"><img src="/home/theme/img/ad/top1.png"></a></div>
-                    <div class="shop-titl fl"><p><b>NO.1 阿卡官方旗舰店</b></p> <p>梦想会喜欢 <span class="fr red">已售出：3000+</span></p> </div>
-                </li>
-                <li class="clearfix">
-                    <div class="shop-name fl"><a href="#"><img src="/home/theme/img/ad/top1.png"></a></div>
-                    <div class="shop-titl fl"><p><b>NO.1 阿卡官方旗舰店</b></p> <p>梦想会喜欢 <span class="fr red">已售出：3000+</span></p> </div>
-                </li>
-                <li class="clearfix">
-                    <div class="shop-name fl"><a href="#"><img src="/home/theme/img/ad/top1.png"></a></div>
-                    <div class="shop-titl fl"><p><b>NO.1 阿卡官方旗舰店</b></p> <p>梦想会喜欢 <span class="fr red">已售出：3000+</span></p> </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+        @endif
+    @endforeach 
 
 
+    <!-- 切换二级分类对应的商品 -->
+    <script>
+        
+        $('.cur').siblings('li').click(function(){
+
+            // 获取在二级分类上设置的value
+            var n = $(this).val();
+
+            // 初始化要与n比较的值
+            var num = 1;
+
+            $(this).addClass('cur');
+            $(this).siblings('li').removeClass();
+            
+            $(this).parents('.time-title').next().find('.H-over').css('display','none');
 
 
+            $(this).parents('.time-title').next().find('.H-over').each(function(){
+
+                if (num == n) {
+
+                    $(this).css('display','block');
+                    return;
+                }
+                num++;
+            });
+        });
+
+        $('.fr li:nth-child(1)').click(function(){
+
+            var n = $(this).val();
+
+            var num = 1;
+            $(this).addClass('cur');
+            $(this).siblings('li').removeClass();
+            
+            $(this).parents('.time-title').next().find('.H-over').css('display','none');
+
+
+            $(this).parents('.time-title').next().find('.H-over').each(function(){
+
+                if (num == n) {
+
+                    $(this).css('display','block');
+                    return;
+                }
+            });
+        });
+    </script>
+
+<!-- 好店推荐 -->
 <section>
     <div class="time-lists clearfix">
         <div class="time-list time-list-w fl">
             <div class="time-title time-clear"><h2>悦帮派</h2></div>
-            <div class="time-border time-border-h clearfix">
+            <div class="time-border time-border-h clearfix" style="border-bottom:none">
                 <div class="fl shop-img">
                     <div class="shop-hgou"><h3>新手上路</h3></div>
                     <div class="shop-help clearfix">
@@ -274,7 +398,27 @@
                             <li><a href="#">用户协议</a> </li>
                         </ul>
                     </div>
-                    <div class="shop-re"><a href="#"><img src="/home/theme/img/ad/shop5.png"></a> </div>
+
+                    <!-- 第六张小图 -->
+                    @php
+                        $num = 0;
+                    @endphp            
+                    <div class="shop-re" style="width:230px;height:129px">
+                        @foreach ($advert as $k1 => $v1)
+                            @if($v1->level == 1 && $v1->status == 0)                 
+                                @php
+                                    $num++;
+                                @endphp
+                                @if ($num == 6)
+                                <a href="{{ $v1->url }}">
+                                <img src="{{ $v1->pic }}" width="100%" height="100%">
+                                </a>
+                                @break
+                                @endif
+                            @endif
+                        @endforeach
+                     </div>
+
                 </div>
                 <div class="shop-bar shop-bar-w clearfix fl">
                     <div class="shop-dan clearfix"><h3 class="fl">悦用户晒单</h3> <a href="#" class="fr">更多晒单</a> </div>

@@ -2,33 +2,38 @@
 
 @section('title', $title)
 
-<style>
-	/*隐藏左侧导航条*/
-	.pullDownList{
+@section('file_js')
+	<link rel="stylesheet" href="/bs/css/bootstrap.min.css">	
+	<style>
+		/*隐藏左侧导航条*/
+		.pullDownList{
 
-		display: none;
-	}
-</style>
+			display: none;
+		}
+		.containers{
+			overflow: auto;
+		}
+	</style>
+@stop
 
 @section('content')
-	<div class="containers clearfix"><div class="pc-nav-item fl"><a href="#" class="pc-title">首页</a> &gt;<a href="#"> 所有货架</a></div> <div class="fr" style="padding-top:20px;"><a href="#" class="reds">所有品牌></a></div></div>
+	<div class="containers clearfix"><div class="pc-nav-item fl"><a href="/" class="pc-title">首页</a> &gt;<a href="#"> 所有货架</a></div> <div class="fr" style="padding-top:20px;">所有品牌></div></div>
 	<div class="containers">
-	    <div class="pc-nav-rack clearfix">
+<!-- 	    <div class="pc-nav-rack clearfix">
 	        <ul>
-	        	<!-- 一级分类 -->
 	        	@foreach ($type as $k => $v) 
 	        		@if ($v->path == '0,')
-		            	<li><a href="#">{{ $v->tname }}</a></li>
+		            	<li class="all">{{ $v->tname }}</li>
 	            	@endif
 	            @endforeach
 	        </ul>
-	    </div>
+	    </div> -->
 		
 		<!-- 一级分类 -->
 		@foreach ($type as $k => $v)
 			@if ($v->path == '0,')
-		    <div>
-		        <div class="pc-nav-title"><h3>{{ $v->tname }}</h3></div>
+		    <div class="parent">
+		        <div class="pc-nav-title up_down" style="display:block;cursor:pointer;color:red"><h3>{{ $v->tname }}</h3></div>
 		        <div class="pc-nav-digit clearfix">
 		            <ul>
 		            	<!-- 二级分类 -->
@@ -50,29 +55,31 @@
 		    </div>
 		    @endif
 		@endforeach
-	    <div style="padding-top:30px;">
-	        <div class="member-pages clearfix">
-	            <div class="fr pc-search-g">
-	                <a href="#" class="fl pc-search-f">上一页</a>
-	                <a class="current" href="#">1</a>
-	                <a href="javascript:;">2</a>
-	                <a href="javascript:;">3</a>
-	                <a href="javascript:;">4</a>
-	                <a href="javascript:;">5</a>
-	                <a href="javascript:;">6</a>
-	                <a href="javascript:;">7</a>
-	                <span class="pc-search-di">…</span>
-	                <a onClick="SEARCH.page(3, true)" href="javascript:;" class="pc-search-n" title="使用方向键右键也可翻到下一页哦！">下一页</a>
-	                    <span class="pc-search-y">
-	                        <em>  共20页    到第</em>
-	                        <input type="text" placeholder="1" class="pc-search-j">
-	                        <em>页</em>
-	                        <a class="confirm" href="#">确定</a>
-	                    </span>
-
-	            </div>
-	        </div>
-	    </div>
 	</div>
 	<div class="pc-buying clearfix"></div>
+
+	<script>
+		
+		// 打开收起一级分类
+		$('.up_down').next().hide();
+		var flag = false;
+		$('.up_down').click(function(){
+
+			if (flag) {
+
+				$(this).next().slideUp();
+				flag = false;
+			} else {
+
+				$(this).next().slideDown();
+				flag = true;
+			}
+			});
+
+		// 选中对应一级分类
+		$('.all').click(function(){
+
+			
+		});
+	</script>
 @stop

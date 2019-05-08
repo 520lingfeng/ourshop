@@ -7,8 +7,8 @@
 
 	/*小图标*/
 	#move{
-		width: 160px;
-		height: 160px;
+		width: 120px;
+		height: 120px;
 		position: absolute;
 		left:0px;
 		top:0px;
@@ -20,9 +20,9 @@
 		width:440px;
 		height:440px;
 		position:absolute;
-    background:#fff;
-		left:545px;
-		top:236px;
+    	background:#fff;
+		left:440px;
+		top:10px;
 		overflow:hidden;
 		display:none;
 	}

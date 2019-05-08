@@ -131,6 +131,12 @@
                                 添加商品
                             </a>
                         </li>
+                        <li>
+                            <a href="/admin/imgs">
+                                <i class="iconfont">&#xe6a7;</i>
+                                商品关联图片列表
+                            </a>
+                        </li>
                     </ul>
                 </li>               
                 <!-- 商品管理 -->
@@ -158,6 +164,78 @@
                     </ul>
                 </li>                
                 <!-- 促销管理 -->
+
+                <!-- 广告管理 -->
+                <li class="list">
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe70b;</i>
+                        广告管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/admin/advert">
+                                <i class="iconfont">&#xe6a7;</i>
+                                广告列表
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/advert/create">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加广告
+                            </a>
+                        </li>
+                    </ul>
+                </li>                
+                <!-- 广告管理 -->
+
+                <!-- 友情链接管理 -->
+                <li class="list">
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe70b;</i>
+                        友情链接管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/admin/links">
+                                <i class="iconfont">&#xe6a7;</i>
+                                友情链接列表
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/links/create">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加友情链接
+                            </a>
+                        </li>
+                    </ul>
+                </li>                
+                <!-- 友情链接管理 --> 
+                
+                <!-- 文章管理 -->
+                <li class="list">
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe70b;</i>
+                        文章管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/admin/articel">
+                                <i class="iconfont">&#xe6a7;</i>
+                                文章列表
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/articel/create">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加文章
+                            </a>
+                        </li>
+                    </ul>
+                </li>                
+                <!-- 文章管理 -->             
             </ul>
           </div>
         </div>
@@ -215,4 +293,8 @@
     })();
     </script>
 </body>
+
+@section('js')
+
+@show()
 </html>

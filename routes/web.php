@@ -32,11 +32,18 @@ Route::group(["middleware"=>'adminlogin'], function(){
     Route::resource('/admin/orders', 'Admin\OrdersController');
     Route::get('/admin/fahuo', 'Admin\OrdersController@send');
 
+    Route::get('/admin/orderinfo', 'Admin\OrdersController@orderinfo');
+
 	// 分类管理
 	Route::resource('/admin/type', 'Admin\TypeController');
 
 	// 商品管理
 	Route::resource('/admin/goods', 'Admin\GoodsController');
+
+    // 商品关联图片
+    Route::resource('/admin/imgs', 'Admin\GoodsImgController');
+    // 添加商品关联图片
+    Route::get('/admin/imgs/add/{id}', 'Admin\GoodsImgController@add');
 
 	// 商品状态
 	Route::get('/admin/status/{id}', 'Admin\StatusController@goods');
@@ -50,6 +57,7 @@ Route::group(["middleware"=>'adminlogin'], function(){
 	Route::post('/admin/sales/store', 'Admin\SalesController@store');
 	// 删除促销商品
 	Route::post('/admin/sales/delete/{id}', 'Admin\SalesController@delete');
+
     // 广告管理
     Route::resource('/admin/advert', 'Admin\AdvertController');
 
@@ -71,6 +79,8 @@ Route::get("/reset",'Home\LoginController@reset');
 //执行重置密码
 Route::post("/doreset",'Home\LoginController@doreset');
 
+//购物车查看
+Route::get('/car','Home\CarController@index');
 
 //注册页面
 Route::resource('/register','Home\RegisterController');
@@ -88,10 +98,13 @@ Route::get('/checkcode',"Home\RegisterController@checkcode");
 
 //购物车查看
 Route::get('/car','Home\CarController@index');
+
 // 商品列表
 Route::get('/list', 'Home\ListController@list');
 // 商品详情
 Route::get('/info/{id}', 'Home\InfoController@info');
+// 二级列表
+Route::get('/erji/{id}', 'Home\ListController@erji');
 //邮件测试
 Route::get('/send','Home\RegisterController@send');
 
@@ -119,4 +132,7 @@ Route::group(["middleware"=>'homelogin'], function(){
     // 收藏管理
     Route::resource('/collects', 'Home\CollectsController');
     Route::get('/add/{id}', 'Home\CollectsController@add');
+
+    // 文章管理
+    Route::get('/articel', 'Home\ArticelController@index');
 });
