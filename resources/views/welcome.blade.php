@@ -309,7 +309,7 @@
                                         @if ($six < 6)
                                         <li>
                                             <div class="brand-imgss"><a href="/info/{{ $ges2_v->gid }}"><img src="{{ $ges2_v->pic }}"></a></div>
-                                            <div class="brand-title"><a href="/info/{{ $ges2_v->gid }}">{{ $ges2->descr }}</a> </div>
+                                            <div class="brand-title"><a href="/info/{{ $ges2_v->gid }}">{{ $ges2_v->descr }}</a> </div>
                                             <div class="brand-price">￥{{ $ges2_v->price }} </div>
                                         </li>
                                             @php
